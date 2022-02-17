@@ -1,0 +1,48 @@
+﻿@model Game
+
+@{ if (Model != null)
+    {
+        <div class="p-3 border">
+            <div class="col d-flex justify-content-center">
+                <p><img src="~/images/@Model.Image" class="imageSize"></p>
+            </div>
+            <div class="col align-content-stretch">
+                <h4><strong>@Model.Title</strong></h4>
+                <h5>Year: @Model.Year</h5>
+                <h5>Platform: @Model.Platform</h5>
+                @*<h5>Genre: @Model.Genre</h5>*@
+                <h5>ESRBRating: @Model.ESRBRating</h5>
+                <form asp-controller="Home" asp-action="DeleteGames">
+                    <input type="text" value="@Model.ID" name="id" hidden />
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+
+            <div class="border d-flex align-content-stretch">
+                @{ if (Model.LoanDate.HasValue)
+                    {
+                        <p><strong>Loaned out to: @Model.LoanedTo on @Model.LoanDate.Value.ToShortDateString()</strong></p>
+                        <form asp-controller="Home" asp-action="ReturnLoanedGame" method="post">
+                            <input type="text" value="@Model.ID" hidden name="Id" />
+                            <button type="submit" class="justify-content-center">Return Game</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="d-flex align-content-stretch">
+                            <form asp-controller="Home" asp-action="LoanedOutGame" method="post">
+                                <input type="text" value="@Model.ID" name="Id" hidden/>
+                                <input type="text" required name="LoanName" placeholder="Enter Name" />
+                                <button type="submit">Loan Game</button>
+                            </form>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>No Games in List</h1>
+    }
+}

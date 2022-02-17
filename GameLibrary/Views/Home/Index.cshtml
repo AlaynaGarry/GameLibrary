@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Game Gear Library";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Game Gear Library</h1>
+</div>
+@model Game
+@{
+    ViewData["Title"] = "Game Gear Stockpile";
+    string strAction = "";
+
+    if (ViewBag.Mode == "Edit")
+    {
+        strAction = "UpdateGame";
+        <h3>Update Game</h3>
+    }
+    else
+    {
+        ViewBag.ID = 0;
+        strAction = "AddGames";
+        <h3>Add Game</h3>
+    }
+
+}
+
+<div>
+    <label>Add Game</label>
+    <div class="error-messages" asp-validation-summary="All"></div>
+    <form asp-controller="Home" asp-action="@strAction" method="post">
+        <input asp-for="ID" value="ViewBag.ID" hidden />
+        <input asp-for="Title" placeholder="Title" />
+        <span asp-validation-for="Title" class="error-messages"></span>
+        <input asp-for="Year" placeholder="2000" />
+        <input asp-for="Platform" placeholder="PS3" />
+        <input asp-for="Genre" placeholder="RPG" />
+        <input asp-for="ESRBRating" placeholder="E10+" />
+        <button tyoe="submit"> Save </button>
+
+        @*<input name="title" placeholder="ex: Assassins Creed" />
+            <input name="year" placeholder="ex: 2020" />
+            <input name="platform" placeholder="ex: PC" />
+            <input name="genre" placeholder="ex: RPG" />
+            <input name="ersb" placeholder="ex: M" />
+            <button tyoe="submit"> Submit </button>*@
+    </form>
+</div>
+

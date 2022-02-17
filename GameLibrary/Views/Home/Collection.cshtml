@@ -1,0 +1,53 @@
+﻿@model List<Game>
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <label>Search</label>
+    <form asp-controller="Home" asp-action="SearchGame">
+        <input name="search" placeholder="ex: mega" />
+        <button tyoe="submit"> Submit </button>
+    </form>
+</div>
+
+<div>
+    <form asp-controller="Home" asp-action="FilterGames">
+        <label for="genre">Genre</label>
+        <input name="genre" placeholder="RPG" />
+
+        <label for="platform">Platform</label>
+        <input name="platform" placeholder="Xbox 360" />
+
+        <label for="esrb">ERSB Rating</label>
+        <input name="ersb" placeholder="E10+" />
+
+        <button type="submit"> Submit </button>
+    </form>
+</div>
+
+
+@{if (Model == null)
+    {
+        <h1>No Game provided</h1>
+    }
+    else
+    {
+        <h3>List of Games</h3>
+        @* <p class="text-center"> Games in Collection: @Model.Count()</p>*@
+        <div class="container">
+            <div class="row gy-5">
+                <div>
+
+                </div>
+
+                @{ foreach (var game in Model)
+                    {
+                        <div class="col-4">
+                            <partial name="_PartialView.cshtml" model="game" />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+}
